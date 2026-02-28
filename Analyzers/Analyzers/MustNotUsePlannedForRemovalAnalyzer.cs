@@ -47,20 +47,20 @@ public class MustNotUsePlannedForRemovalAnalyzer : DiagnosticAnalyzer
     private static void AnalyzeNode(SyntaxNodeAnalysisContext context, ISymbol owningSymbol, IEnumerable<string> plannedRefactorTickets)
     {
         var memberAccess = (MemberAccessExpressionSyntax)context.Node;
-        var symbol = context.SemanticModel.GetSymbolInfo(memberAccess).Symbol;
+        var targetSymbol = context.SemanticModel.GetSymbolInfo(memberAccess).Symbol;
 
-        if (symbol == null) return;
+        foreach (var symbol in targetSymbol.AndAllContainers())
+        {
+            // Check if the accessed member or its containing type has any attribute
+            var plannedRemoval = symbol.FindAttribute<PlannedRemovalAttribute>(context.ReportDiagnostic);
+            if (plannedRemoval == null)
+                continue;
 
-        // Check if the accessed member or its containing type has any attribute
-        // TODO: go up symbol stack for more removals
-        var plannedRemoval = symbol.FindAttribute<PlannedRemovalAttribute>(context.ReportDiagnostic);
-        if (plannedRemoval == null)
-            return;
+            if (plannedRefactorTickets.Contains(plannedRemoval.TicketNumber))
+                continue;
 
-        if (plannedRefactorTickets.Contains(plannedRemoval.TicketNumber))
-            return;
-
-        // This doesn't care about the manifest; it requires that the containing type has planned for refactor OR removal using the same TicketNumber
-        context.ReportDiagnostic(Diagnostic.Create(Rule, context.Node.GetLocation(), symbol.Name, owningSymbol.Name, plannedRemoval.TicketNumber));
+            // This doesn't care about the manifest; it requires that the containing type has planned for refactor OR removal using the same TicketNumber
+            context.ReportDiagnostic(Diagnostic.Create(Rule, context.Node.GetLocation(), symbol.Name, owningSymbol.Name, plannedRemoval.TicketNumber));
+        }
     }
 }
