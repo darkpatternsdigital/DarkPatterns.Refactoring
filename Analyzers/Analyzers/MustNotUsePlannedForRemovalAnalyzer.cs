@@ -33,10 +33,16 @@ public class MustNotUsePlannedForRemovalAnalyzer : DiagnosticAnalyzer
 
         context.RegisterCodeBlockStartAction<SyntaxKind>(codeBlockStartContext =>
         {
+            Action<Diagnostic> noopReportDiagnostics = _ => { /* Intentionally not logging here; should be caught by another analyzer */ };
             // Determine owning symbols and gather planned tickets (refactor/removal)
             var tickets = from symbol in codeBlockStartContext.OwningSymbol.AndAllContainers()
-                          from attr in symbol.FindAttributes<PlannedRefactorAttribute>(_ => { /* Intentionally not logging here; should be caught by another analyzer */ })
-                          select attr.TicketNumber;
+                          from ticketNumber in Enumerable.Concat(
+                              // If the code is planned for refactor, it can use things planned for removal in the same ticket
+                              symbol.FindAttributes<PlannedRefactorAttribute>(noopReportDiagnostics).Select(attr => attr.TicketNumber),
+                              // If the code is planned for removal, it can use things planned for removal in the same ticket
+                              symbol.FindAttributes<PlannedRemovalAttribute>(noopReportDiagnostics).Select(attr => attr.TicketNumber)
+                          )
+                          select ticketNumber;
 
             // TODO: Scan more syntax usage for symbols flagged for removal
             // See https://github.com/dotnet/roslyn/blob/main/docs/analyzers/Analyzer%20Actions%20Semantics.md for more information
