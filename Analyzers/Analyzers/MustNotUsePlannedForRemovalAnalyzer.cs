@@ -4,6 +4,7 @@ using System.Collections.Immutable;
 using System.Linq;
 using DarkPatterns.Refactoring.Attributes;
 using DarkPatterns.Refactoring.Manifest;
+using DarkPatterns.Refactoring.Symbols;
 using Microsoft.CodeAnalysis;
 using Microsoft.CodeAnalysis.CSharp;
 using Microsoft.CodeAnalysis.CSharp.Syntax;
@@ -33,9 +34,9 @@ public class MustNotUsePlannedForRemovalAnalyzer : DiagnosticAnalyzer
         context.RegisterCodeBlockStartAction<SyntaxKind>(codeBlockStartContext =>
         {
             // Determine owning symbols and gather planned tickets (refactor/removal)
-            // TODO: recursively go up stack
-            var plannedRefactor = codeBlockStartContext.OwningSymbol.FindAttributes<PlannedRefactorAttribute>(_ => { /* TODO */ });
-            var tickets = plannedRefactor.Select(r => r.TicketNumber);
+            var tickets = from symbol in codeBlockStartContext.OwningSymbol.AndAllContainers()
+                          from attr in symbol.FindAttributes<PlannedRefactorAttribute>(_ => { /* Intentionally not logging here; should be caught by another analyzer */ })
+                          select attr.TicketNumber;
 
             // TODO: Scan more syntax usage for symbols flagged for removal
             // See https://github.com/dotnet/roslyn/blob/main/docs/analyzers/Analyzer%20Actions%20Semantics.md for more information
