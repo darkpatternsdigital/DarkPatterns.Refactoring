@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<Project>
+	<ItemGroup>
+		<CompilerVisibleItemMetadata Include="AdditionalFiles" MetadataName="Identity" />
+		<CompilerVisibleItemMetadata Include="AdditionalFiles" MetadataName="DPDRefactoringManifest" />
+
+		<AvailableItemName Include="DPDRefactoringManifest" DisplayName="Refactoring Manifest for DarkPatterns.Refactoring" />
+		<Watch Include="@(DPDRefactoringManifest)" />
+	</ItemGroup>
+
+	<Target Name="_InjectAdditionalFilesForDPDRefactoring" BeforeTargets="GenerateMSBuildEditorConfigFileShouldRun">
+		<ItemGroup>
+			<AdditionalFiles Include="%(Identity)">
+				<DPDInclude>true</DPDInclude>
+				<DPDRefactoringManifest>@(DPDRefactoringManifest->'true')</DPDRefactoringManifest>
+			</AdditionalFiles>
+		</ItemGroup>
+	</Target>
+</Project>

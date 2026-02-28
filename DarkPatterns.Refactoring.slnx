@@ -1,0 +1,10 @@
+<Solution>
+  <Folder Name="/examples/">
+    <Project Path="examples/RefactoringExample/RefactoringExample.csproj" />
+  </Folder>
+  <Project Path="Analyzers/Analyzers.Package/Analyzers.Package.csproj" Id="09ad271f-336d-449d-b470-dae7336a29e0" />
+  <Project Path="Analyzers/Analyzers.Test/Analyzers.Test.csproj" Id="11bc964b-68e2-4b69-9aa9-b39f6e583fca" />
+  <Project Path="Analyzers/Analyzers.Vsix/Analyzers.Vsix.csproj" Id="7d88b50e-6072-41ec-a49c-9b288d258002" />
+  <Project Path="Analyzers/Analyzers/Analyzers.csproj" Id="89326e9c-de48-4d01-a8fd-a79bd3673543" />
+  <Project Path="Annotations/Annotations.csproj" />
+</Solution>
