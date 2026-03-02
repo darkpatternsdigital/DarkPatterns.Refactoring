@@ -70,6 +70,25 @@ public class MustNotUsePlannedForRemovalAnalyzerShould
     }
 
     [TestMethod]
+    public async Task Warn_when_constructing_classes_being_removed()
+    {
+        await TestBuilder.TestCSharp<MustNotUsePlannedForRemovalAnalyzer>()
+            .AddSources("""
+                [PlannedRemoval("1", "Remove this method")]
+                class OutdatedClass
+                {
+                }
+
+                class SomeClass
+                {
+                    public object ShouldBeRefactored() => {|#0:new OutdatedClass()|};
+                }
+                """)
+            .AddExpectedDiagnostics(MustNotUsePlannedForRemovalAnalyzer.Rule.AsResult().WithLocation(0).WithArguments("OutdatedClass", "ShouldBeRefactored", "1"))
+            .RunAsync(TestContext.CancellationToken);
+    }
+
+    [TestMethod]
     public async Task Produce_no_diagnostic_on_method_when_marked_for_refactor()
     {
         await TestBuilder.TestCSharp<MustNotUsePlannedForRemovalAnalyzer>()

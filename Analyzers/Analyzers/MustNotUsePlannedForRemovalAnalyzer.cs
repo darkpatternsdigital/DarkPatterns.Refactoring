@@ -7,7 +7,6 @@ using DarkPatterns.Refactoring.Manifest;
 using DarkPatterns.Refactoring.Symbols;
 using Microsoft.CodeAnalysis;
 using Microsoft.CodeAnalysis.CSharp;
-using Microsoft.CodeAnalysis.CSharp.Syntax;
 using Microsoft.CodeAnalysis.Diagnostics;
 
 namespace DarkPatterns.Refactoring;
@@ -35,25 +34,46 @@ public class MustNotUsePlannedForRemovalAnalyzer : DiagnosticAnalyzer
         {
             Action<Diagnostic> noopReportDiagnostics = _ => { /* Intentionally not logging here; should be caught by another analyzer */ };
             // Determine owning symbols and gather planned tickets (refactor/removal)
-            var tickets = from symbol in codeBlockStartContext.OwningSymbol.AndAllContainers()
-                          from ticketNumber in Enumerable.Concat(
-                              // If the code is planned for refactor, it can use things planned for removal in the same ticket
-                              symbol.FindAttributes<PlannedRefactorAttribute>(noopReportDiagnostics).Select(attr => attr.TicketNumber),
-                              // If the code is planned for removal, it can use things planned for removal in the same ticket
-                              symbol.FindAttributes<PlannedRemovalAttribute>(noopReportDiagnostics).Select(attr => attr.TicketNumber)
-                          )
-                          select ticketNumber;
+
+            // If the code is planned for refactor, it can use things planned for removal in the same ticket
+            var refactorTickets =
+                from symbol in codeBlockStartContext.OwningSymbol.AndAllContainers()
+                from ticketNumber in symbol.FindAttributes<PlannedRefactorAttribute>(noopReportDiagnostics).Select(attr => attr.TicketNumber)
+                select ticketNumber;
+            // If the code is planned for removal, it can use things planned for removal in the same ticket
+            var removalTickets =
+                from symbol in codeBlockStartContext.OwningSymbol.AndAllContainers()
+                from ticketNumber in symbol.FindAttributes<PlannedRemovalAttribute>(noopReportDiagnostics).Select(attr => attr.TicketNumber)
+                select ticketNumber;
+
+            var tickets = refactorTickets.Concat(removalTickets);
 
             // TODO: Scan more syntax usage for symbols flagged for removal
             // See https://github.com/dotnet/roslyn/blob/main/docs/analyzers/Analyzer%20Actions%20Semantics.md for more information
-            codeBlockStartContext.RegisterSyntaxNodeAction(ctx => AnalyzeNode(ctx, codeBlockStartContext.OwningSymbol, tickets), SyntaxKind.SimpleMemberAccessExpression);
+            codeBlockStartContext.RegisterSyntaxNodeAction(ctx => AnalyzeExpressionNode(ctx, codeBlockStartContext.OwningSymbol, tickets), SyntaxKind.SimpleMemberAccessExpression);
+            codeBlockStartContext.RegisterSyntaxNodeAction(ctx => AnalyzeExpressionNode(ctx, codeBlockStartContext.OwningSymbol, tickets), SyntaxKind.ObjectCreationExpression);
+            // TODO: how do I test a pointer?
+            codeBlockStartContext.RegisterSyntaxNodeAction(ctx => AnalyzeExpressionNode(ctx, codeBlockStartContext.OwningSymbol, tickets), SyntaxKind.PointerMemberAccessExpression);
+
+            // Can be used in refactoring or removal settings
+            // SyntaxKind.TypeOfExpression
+            // SyntaxKind.TypeArgumentList // use of removed type in generic?
+
+            // If public, be flagged as removal
+            // SyntaxKind.FieldDeclaration // field type?
+            // SyntaxKind.FieldExpression // field access?
+            // SyntaxKind.PropertyDeclaration // property tpye?
+            // SyntaxKind.MethodDeclaration // return type?
+            // SyntaxKind.TypeParameterConstraintClause // use of removed type in generic constraint?
+            // SyntaxKind.Parameter // parameter type?
+
+            // Can we warn for only the first instance for each ticket in a code block? Is that helpful?
         });
     }
 
-    private static void AnalyzeNode(SyntaxNodeAnalysisContext context, ISymbol owningSymbol, IEnumerable<string> plannedRefactorTickets)
+    private static void AnalyzeExpressionNode(SyntaxNodeAnalysisContext context, ISymbol owningSymbol, IEnumerable<string> plannedRefactorTickets)
     {
-        var memberAccess = (MemberAccessExpressionSyntax)context.Node;
-        var targetSymbol = context.SemanticModel.GetSymbolInfo(memberAccess).Symbol;
+        var targetSymbol = context.SemanticModel.GetSymbolInfo(context.Node).Symbol;
 
         foreach (var symbol in targetSymbol.AndAllContainers())
         {
