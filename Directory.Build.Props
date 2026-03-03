@@ -26,6 +26,8 @@
 	</ItemGroup>
 
 	<PropertyGroup>
+		<AnnotationsVersion>0.1.0</AnnotationsVersion>
+		<AnalyzersVersion>0.1.0</AnalyzersVersion>
 	</PropertyGroup>
 
 	<Import Project="Directory.Build.local.props" Condition="exists('$(MSBuildThisFileDirectory)Directory.Build.local.props')" />

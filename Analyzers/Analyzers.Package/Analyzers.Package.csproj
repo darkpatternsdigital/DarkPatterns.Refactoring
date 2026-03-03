@@ -6,6 +6,7 @@
     <SuppressDependenciesWhenPacking>true</SuppressDependenciesWhenPacking>
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
     <PackageId>$(RootNamespacePrefix).Analyzers</PackageId>
+    <VersionPrefix Condition=" '$(VersionPrefix)' == '' ">$(AnalyzersVersion)</VersionPrefix>
   </PropertyGroup>
 
   <PropertyGroup>
