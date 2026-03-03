@@ -18,6 +18,7 @@ public static class TestBuilder
                 ])
             )
         .AddSources("""
+            global using System;
             global using DarkPatterns.Refactoring;
             """);
 }

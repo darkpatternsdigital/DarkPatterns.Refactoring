@@ -1,14 +1,14 @@
 ﻿using System.Collections.Generic;
 using Microsoft.CodeAnalysis;
 
-namespace DarkPatterns.Refactoring.Symbols;
+namespace DarkPatterns.Refactoring.Utilities;
 
 public static class SymbolUtilities
 {
     extension(ISymbol? target)
     {
         /// <summary>
-        /// Enumerates the current symbol and all containers of that symbol
+        /// Enumerates the given symbol and all containers of that symbol
         /// </summary>
         public IEnumerable<ISymbol> AndAllContainers()
         {
