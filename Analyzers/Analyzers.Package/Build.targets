@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<Project>
+	<ItemGroup>
+		<DPDRefactoringManifest Condition="'$(DPDRefactoringManifest)' == '' and exists('PlannedRefactoring.txt')" Include="PlannedRefactoring.txt"/>
+	</ItemGroup>
+</Project>

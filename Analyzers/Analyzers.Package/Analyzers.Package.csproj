@@ -5,6 +5,7 @@
     <IncludeBuildOutput>false</IncludeBuildOutput>
     <SuppressDependenciesWhenPacking>true</SuppressDependenciesWhenPacking>
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
+    <PackageId>$(RootNamespacePrefix).Analyzers</PackageId>
   </PropertyGroup>
 
   <PropertyGroup>
@@ -20,7 +21,8 @@
 
   <ItemGroup>
     <ProjectReference Include="..\Analyzers\Analyzers.csproj" />
-	<None Include="Build.props" Pack="true" PackagePath="build/$(AssemblyName).props" />
+    <None Include="Build.props" Pack="true" PackagePath="build/$(PackageId).props" />
+    <None Include="Build.targets" Pack="true" PackagePath="build/$(PackageId).targets" />
   </ItemGroup>
 
   <ItemGroup>

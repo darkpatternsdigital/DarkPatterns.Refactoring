@@ -7,14 +7,11 @@
 	</PropertyGroup>
 
 	<ItemGroup>
-		<DPDRefactoringManifest Include="PlannedRefactoring.txt" />
-	</ItemGroup>
-
-	<ItemGroup>
 		<ProjectReference Include="$(SolutionRoot)\Analyzers\Analyzers\Analyzers.csproj" PrivateAssets="all" ReferenceOutputAssembly="false" OutputItemType="Analyzer" />
 		<ProjectReference Include="$(SolutionRoot)\Annotations\Annotations.csproj" />
 	</ItemGroup>
 
 	<Import Project="$(SolutionRoot)\Analyzers\Analyzers.Package\Build.props" />
+	<Import Project="$(SolutionRoot)\Analyzers\Analyzers.Package\Build.targets" />
 
 </Project>

@@ -25,9 +25,9 @@ See the [refactoring example](./examples/RefactoringExample/) for an example.
    explanation. If the usage is kept internal, `PlannedRefactor` can be added
    instead, which does not propagate to other uses.
 
-4. Add a list of tickets to a `PlannedRefactoring.txt` that is added to the
-   project as a `DPDRefactoringManifest` build action. The format of this file
-   is one line per ticket, optionally with a space followed by an explanation.
+4. Add a list of tickets to a `PlannedRefactoring.txt` in the root of the
+   project. The format of this file is one line per ticket, optionally with a
+   space followed by an explanation.
 
    ```text
    GH-1 Title of ticket
