@@ -1,6 +1,6 @@
 ﻿namespace DarkPatterns.Refactoring;
 
-[PlannedRemoval("1", "This class is outdated; use NewerClass instead")]
+[PlannedRemoval("1", "Use NewerClass instead")]
 public class OutdatedClass
 {
 

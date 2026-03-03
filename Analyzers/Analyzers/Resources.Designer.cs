@@ -70,7 +70,7 @@ namespace DarkPatterns.Refactoring {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Symbol &apos;{0}&apos; is marked for removal and &apos;{1}&apos; is not marked as needing refactoring by ticket &apos;{2}&apos;.
+        ///   Looks up a localized string similar to Symbol &apos;{0}&apos; is marked for removal during &apos;{2}&apos;; &apos;{1}&apos; should require refactoring.
         /// </summary>
         internal static string MustNotUsePlannedForRemovalMessageFormat {
             get {
@@ -97,7 +97,7 @@ namespace DarkPatterns.Refactoring {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Symbol &apos;{0}&apos; is marked for refactoring and &apos;{1}&apos; is not marked as planned.
+        ///   Looks up a localized string similar to Symbol &apos;{0}&apos; is marked for refactoring during &apos;{1}&apos;; notes: {2}.
         /// </summary>
         internal static string MustRefactorMessageFormat {
             get {
@@ -124,7 +124,7 @@ namespace DarkPatterns.Refactoring {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Symbol &apos;{0}&apos; is planned for removal and &apos;{1}&apos; is not marked as planned.
+        ///   Looks up a localized string similar to Symbol &apos;{0}&apos; is planned for removal during &apos;{1}&apos;; notes: {2}.
         /// </summary>
         internal static string ReadyForRemovalMessageFormat {
             get {

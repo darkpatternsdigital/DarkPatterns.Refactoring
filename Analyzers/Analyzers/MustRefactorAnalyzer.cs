@@ -51,7 +51,7 @@ public class MustRefactorAnalyzer : DiagnosticAnalyzer
         if (manifest.PlannedIssues.Contains(plannedRemoval.TicketNumber))
             return;
 
-        var diagnostic = Diagnostic.Create(Rule, context.Symbol.Locations[0], context.Symbol.Name, plannedRemoval.TicketNumber);
+        var diagnostic = Diagnostic.Create(Rule, context.Symbol.Locations[0], context.Symbol.Name, plannedRemoval.TicketNumber, plannedRemoval.RefactorInstructions);
         context.ReportDiagnostic(diagnostic);
     }
 }
