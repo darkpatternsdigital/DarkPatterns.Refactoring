@@ -1,7 +1,6 @@
 ﻿using System.Threading.Tasks;
 using AnalyzerTesting.CSharp.Extensions;
 using DarkPatterns.Refactoring.Verifiers;
-using Microsoft.CodeAnalysis.Testing;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace DarkPatterns.Refactoring;
@@ -605,9 +604,190 @@ public class MustNotUsePlannedForRemovalAnalyzerShould
                 """)
             .RunAsync(TestContext.CancellationToken);
     }
-    #endregion method return type
+    #endregion method parameter type
 
-    // TODO: test type parameter constraints
-    // TODO: test delegate types
-    // TODO: test parameter defaults
+    #region method type parameter constraint
+    [TestMethod]
+    public async Task Warn_when_using_classes_being_removed_as_a_private_method_type_parameter_constraint()
+    {
+        await TestBuilder.TestCSharp<MustNotUsePlannedForRemovalAnalyzer>()
+            .AddSources("""
+                [PlannedRemoval("1", "Remove this class")]
+                class OutdatedClass { }
+
+                class SomeClass
+                {
+                    private void ShouldBeRefactored<T>()
+                        where T : {|#0:OutdatedClass|}
+                    {
+                    }
+                }
+                """)
+            .AddExpectedDiagnostics(MustNotUsePlannedForRemovalAnalyzer.Rule.AsResult().WithLocation(0).WithArguments("OutdatedClass", "ShouldBeRefactored", "1"))
+            .RunAsync(TestContext.CancellationToken);
+    }
+
+    [TestMethod]
+    public async Task Produce_no_diagnostic_when_using_classes_being_removed_as_a_private_method_type_parameter_constraint_when_marked_for_refactor()
+    {
+        await TestBuilder.TestCSharp<MustNotUsePlannedForRemovalAnalyzer>()
+            .AddSources("""
+                [PlannedRemoval("1", "Remove this class")]
+                class OutdatedClass { }
+
+                class SomeClass
+                {
+                    [PlannedRefactor("1", "Needs rework")]
+                    private void ShouldBeRefactored<T>()
+                        where T : {|#0:OutdatedClass|}
+                    {
+                    }
+                }
+                """)
+            .RunAsync(TestContext.CancellationToken);
+    }
+
+    [TestMethod]
+    public async Task Warn_when_using_classes_being_removed_as_a_nonprivate_method_type_parameter_constraint_when_marked_for_refactor()
+    {
+        await TestBuilder.TestCSharp<MustNotUsePlannedForRemovalAnalyzer>()
+            .AddSources("""
+                [PlannedRemoval("1", "Remove this class")]
+                class OutdatedClass { }
+
+                [PlannedRefactor("1", "Needs rework")]
+                class SomeClass
+                {
+                    protected void ShouldBeRefactored<T>()
+                        where T : {|#0:OutdatedClass|}
+                    {
+                    }
+                }
+                """)
+            .AddExpectedDiagnostics(MustNotUsePlannedForRemovalAnalyzer.Rule.AsResult().WithLocation(0).WithArguments("OutdatedClass", "ShouldBeRefactored", "1"))
+            .RunAsync(TestContext.CancellationToken);
+    }
+
+    [TestMethod]
+    public async Task Produce_no_diagnostic_when_using_classes_being_removed_as_a_nonprivate_method_type_parameter_constraint_when_marked_for_removal()
+    {
+        await TestBuilder.TestCSharp<MustNotUsePlannedForRemovalAnalyzer>()
+            .AddSources("""
+                [PlannedRemoval("1", "Remove this class")]
+                class OutdatedClass { }
+
+                class SomeClass
+                {
+                    [PlannedRemoval("1", "Needs rework")]
+                    protected void ShouldBeRefactored<T>()
+                        where T : {|#0:OutdatedClass|}
+                    {
+                    }
+                }
+                """)
+            .RunAsync(TestContext.CancellationToken);
+    }
+    #endregion method type parameter constraint
+
+    #region class type parameter constraint
+    [TestMethod]
+    public async Task Warn_when_using_classes_being_removed_as_a_private_class_type_parameter_constraint()
+    {
+        await TestBuilder.TestCSharp<MustNotUsePlannedForRemovalAnalyzer>()
+            .AddSources("""
+                [PlannedRemoval("1", "Remove this class")]
+                class OutdatedClass { }
+
+                class ShouldBeRefactored<T>
+                    where T : {|#0:OutdatedClass|}
+                {
+                }
+                """)
+            .AddExpectedDiagnostics(MustNotUsePlannedForRemovalAnalyzer.Rule.AsResult().WithLocation(0).WithArguments("OutdatedClass", "ShouldBeRefactored", "1"))
+            .RunAsync(TestContext.CancellationToken);
+    }
+
+    [TestMethod]
+    public async Task Produce_no_diagnostic_when_using_classes_being_removed_as_a_private_class_type_parameter_constraint_when_marked_for_refactor()
+    {
+        await TestBuilder.TestCSharp<MustNotUsePlannedForRemovalAnalyzer>()
+            .AddSources("""
+                [PlannedRemoval("1", "Remove this class")]
+                class OutdatedClass { }
+
+                [PlannedRefactor("1", "Needs rework")]
+                class ShouldBeRefactored<T>
+                    where T : {|#0:OutdatedClass|}
+                {
+                }
+                """)
+            .RunAsync(TestContext.CancellationToken);
+    }
+
+    [TestMethod]
+    public async Task Warn_when_using_classes_being_removed_as_a_nonprivate_class_type_parameter_constraint_when_marked_for_refactor()
+    {
+        await TestBuilder.TestCSharp<MustNotUsePlannedForRemovalAnalyzer>()
+            .AddSources("""
+                [PlannedRemoval("1", "Remove this class")]
+                public class OutdatedClass { }
+
+                [PlannedRefactor("1", "Needs rework")]
+                public class ShouldBeRefactored<T>
+                    where T : {|#0:OutdatedClass|}
+                {
+                }
+                """)
+            .AddExpectedDiagnostics(MustNotUsePlannedForRemovalAnalyzer.Rule.AsResult().WithLocation(0).WithArguments("OutdatedClass", "ShouldBeRefactored", "1"))
+            .RunAsync(TestContext.CancellationToken);
+    }
+
+    [TestMethod]
+    public async Task Produce_no_diagnostic_when_using_classes_being_removed_as_a_nonprivate_class_type_parameter_constraint_when_marked_for_removal()
+    {
+        await TestBuilder.TestCSharp<MustNotUsePlannedForRemovalAnalyzer>()
+            .AddSources("""
+                [PlannedRemoval("1", "Remove this class")]
+                public class OutdatedClass { }
+
+                [PlannedRemoval("1", "Needs rework")]
+                public class ShouldBeRefactored<T>
+                    where T : {|#0:OutdatedClass|}
+                {
+                }
+                """)
+            .RunAsync(TestContext.CancellationToken);
+    }
+    #endregion class type parameter constraint
+
+    #region delegate
+    [TestMethod]
+    public async Task Warn_when_using_classes_being_removed_as_a_private_delegate()
+    {
+        await TestBuilder.TestCSharp<MustNotUsePlannedForRemovalAnalyzer>()
+            .AddSources("""
+                [PlannedRemoval("1", "Remove this class")]
+                class OutdatedClass { }
+
+                delegate {|#0:OutdatedClass|} ShouldBeRefactored({|#1:OutdatedClass|} data);
+                """)
+            .AddExpectedDiagnostics(MustNotUsePlannedForRemovalAnalyzer.Rule.AsResult().WithLocation(0).WithArguments("OutdatedClass", "ShouldBeRefactored", "1"))
+            .AddExpectedDiagnostics(MustNotUsePlannedForRemovalAnalyzer.Rule.AsResult().WithLocation(1).WithArguments("OutdatedClass", "ShouldBeRefactored", "1"))
+            .RunAsync(TestContext.CancellationToken);
+    }
+
+    [TestMethod]
+    public async Task Produce_no_diagnostic_when_using_classes_being_removed_as_a_nonprivate_delegate_when_marked_for_removal()
+    {
+        await TestBuilder.TestCSharp<MustNotUsePlannedForRemovalAnalyzer>()
+            .AddSources("""
+                [PlannedRemoval("1", "Remove this class")]
+                public class OutdatedClass { }
+
+                [PlannedRemoval("1", "Needs rework")]
+                public delegate {|#0:OutdatedClass|} ShouldBeRefactored({|#1:OutdatedClass|} data);
+                """)
+            .RunAsync(TestContext.CancellationToken);
+    }
+    #endregion delegate
 }

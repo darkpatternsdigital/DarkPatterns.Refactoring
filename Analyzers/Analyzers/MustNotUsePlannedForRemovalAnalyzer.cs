@@ -60,6 +60,7 @@ public class MustNotUsePlannedForRemovalAnalyzer : DiagnosticAnalyzer
         context.RegisterSymbolStartAction(AnalyzeSymbolNode, SymbolKind.TypeParameter);
         context.RegisterSymbolStartAction(AnalyzeSymbolNode, SymbolKind.FunctionPointerType);
         context.RegisterSymbolStartAction(AnalyzeSymbolNode, SymbolKind.Method);
+        context.RegisterSymbolStartAction(AnalyzeSymbolNode, SymbolKind.NamedType);
     }
 
     private static void AnalyzeSymbolNode(SymbolStartAnalysisContext symbolContext)
@@ -75,7 +76,12 @@ public class MustNotUsePlannedForRemovalAnalyzer : DiagnosticAnalyzer
             from ticketNumber in symbol.FindAttributes<PlannedRemovalAttribute>(noopReportDiagnostics).Select(attr => attr.TicketNumber)
             select ticketNumber;
 
-        var tickets = symbolContext.Symbol.DeclaredAccessibility == Accessibility.Private
+        // "Friend" is `internal`; if the containing symbol is a namespace or assembly, `internal` is the best C# does.
+        var privateAccessibility = symbolContext.Symbol.ContainingSymbol.Kind is SymbolKind.Namespace or SymbolKind.Assembly
+            ? Accessibility.Friend
+            : Accessibility.Private;
+
+        var tickets = symbolContext.Symbol.DeclaredAccessibility == privateAccessibility
             ? refactorTickets.Concat(removalTickets)
             : removalTickets;
 
