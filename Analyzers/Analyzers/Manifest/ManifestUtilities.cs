@@ -23,12 +23,14 @@ public static class ManifestUtilities
             return new RefactoringManifest
             {
                 PlannedIssues = manifestLines
-                    .Where(x => x.Contains(' '))
                     .Select(x =>
                     {
                         int firstSpace = x.IndexOf(' ');
+                        if (firstSpace == -1)
+                            return (x, string.Empty);
                         return (x.Substring(0, firstSpace), x.Substring(firstSpace + 1));
                     })
+                    .Where(x => x.Item1.Length > 0)
                     .ToLookup(x => x.Item1, x => x.Item2)
             };
         }

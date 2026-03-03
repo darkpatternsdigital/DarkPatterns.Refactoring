@@ -1,6 +1,16 @@
-# DarkPattern.Refactoring.Analyzers
+# DarkPattern.Refactoring
 
 A collection of C# libraries to assist with maintenance of complicated and evolving codebases.
+
+
+* ![DarkPatterns.Refactoring.Annotations NuGet](https://img.shields.io/nuget/v/DarkPatterns.Refactoring.Annotations)
+  [C# attributes for Refactoring](./Annotations), including `PlannedRemoval` and `PlannedRefactor`.
+* ![DarkPatterns.Refactoring.Analyzers NuGet](https://img.shields.io/nuget/v/DarkPatterns.Refactoring.Analyzers)
+  [C# analyzers for Refactoring](./Analyzers/Analyzers.Package/), to generate warnings and track plans for future refactors.
+
+## Usage
+
+See the [refactoring example](./examples/RefactoringExample/) for an example.
 
 1. Add both `DarkPatterns.Refactoring.Annotations` and
    `DarkPatterns.Refactoring.Analyzers` packages to your project.

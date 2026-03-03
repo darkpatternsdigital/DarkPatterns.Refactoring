@@ -4,10 +4,18 @@
     <TargetFramework>netstandard2.0</TargetFramework>
     <ImplicitUsings>enable</ImplicitUsings>
     <Nullable>enable</Nullable>
+    <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
   </PropertyGroup>
 
   <ItemGroup>
     <PackageReference Update="DarkPatterns.Build.Structure" Version="0.1.1" />
   </ItemGroup>
+
+  <PropertyGroup>
+    <PackageRequireLicenseAcceptance>false</PackageRequireLicenseAcceptance>
+    <Description>DarkPatterns.Refactoring.Annotations</Description>
+    <PackageReleaseNotes>Annotations for use with DarkPatterns.Refactoring.Analyzers.</PackageReleaseNotes>
+    <PackageTags>Refactoring, analyzers</PackageTags>
+  </PropertyGroup>
 
 </Project>

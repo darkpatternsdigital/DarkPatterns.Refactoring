@@ -1,4 +1,4 @@
-# DarkPattern.Refactoring.Analyzers
+# DarkPattern.Refactoring.Annotations
 
 A collection of C# libraries to assist with maintenance of complicated and evolving codebases.
 
