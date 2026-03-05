@@ -12,7 +12,7 @@ namespace DarkPatterns.Refactoring;
 [DiagnosticAnalyzer(LanguageNames.CSharp)]
 public class ReadyForRemovalAnalyzer : DiagnosticAnalyzer
 {
-    public const string DiagnosticId = "DPDREF04";
+    public const string DiagnosticId = "DPDREF02";
 
     private static readonly LocalizableString Title = new LocalizableResourceString(nameof(Resources.ReadyForRemovalTitle), Resources.ResourceManager, typeof(Resources));
     private static readonly LocalizableString MessageFormat = new LocalizableResourceString(nameof(Resources.ReadyForRemovalMessageFormat), Resources.ResourceManager, typeof(Resources));

@@ -10,8 +10,8 @@
 
 namespace DarkPatterns.Refactoring {
     using System;
-    
-    
+
+
     /// <summary>
     ///   A strongly-typed resource class, for looking up localized strings, etc.
     /// </summary>
@@ -23,15 +23,15 @@ namespace DarkPatterns.Refactoring {
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
     [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
     internal class Resources {
-        
+
         private static global::System.Resources.ResourceManager resourceMan;
-        
+
         private static global::System.Globalization.CultureInfo resourceCulture;
-        
+
         [global::System.Diagnostics.CodeAnalysis.SuppressMessageAttribute("Microsoft.Performance", "CA1811:AvoidUncalledPrivateCode")]
         internal Resources() {
         }
-        
+
         /// <summary>
         ///   Returns the cached ResourceManager instance used by this class.
         /// </summary>
@@ -45,7 +45,7 @@ namespace DarkPatterns.Refactoring {
                 return resourceMan;
             }
         }
-        
+
         /// <summary>
         ///   Overrides the current thread's CurrentUICulture property for all
         ///   resource lookups using this strongly typed resource class.
@@ -59,34 +59,34 @@ namespace DarkPatterns.Refactoring {
                 resourceCulture = value;
             }
         }
-        
+
         /// <summary>
-        ///   Looks up a localized string similar to Items not planned for refactoring cannot use symbols flagged for removal..
+        ///   Looks up a localized string similar to Items not planned for removal cannot expose symbols flagged for removal..
         /// </summary>
-        internal static string MustNotUsePlannedForRemovalDescription {
+        internal static string MustRemovePlannedForRemovalDescription {
             get {
-                return ResourceManager.GetString("MustNotUsePlannedForRemovalDescription", resourceCulture);
+                return ResourceManager.GetString("MustRemovePlannedForRemovalDescription", resourceCulture);
             }
         }
-        
+
         /// <summary>
-        ///   Looks up a localized string similar to Symbol &apos;{0}&apos; is marked for removal during &apos;{2}&apos;; &apos;{1}&apos; should require refactoring.
+        ///   Looks up a localized string similar to Symbol &apos;{0}&apos; is marked for removal and &apos;{1}&apos; is not marked for removal by ticket &apos;{2}&apos;: {3}.
         /// </summary>
-        internal static string MustNotUsePlannedForRemovalMessageFormat {
+        internal static string MustRemovePlannedForRemovalMessageFormat {
             get {
-                return ResourceManager.GetString("MustNotUsePlannedForRemovalMessageFormat", resourceCulture);
+                return ResourceManager.GetString("MustRemovePlannedForRemovalMessageFormat", resourceCulture);
             }
         }
-        
+
         /// <summary>
-        ///   Looks up a localized string similar to Item is not planned for refactoring.
+        ///   Looks up a localized string similar to Item is not planned for removal.
         /// </summary>
-        internal static string MustNotUsePlannedForRemovalTitle {
+        internal static string MustRemovePlannedForRemovalTitle {
             get {
-                return ResourceManager.GetString("MustNotUsePlannedForRemovalTitle", resourceCulture);
+                return ResourceManager.GetString("MustRemovePlannedForRemovalTitle", resourceCulture);
             }
         }
-        
+
         /// <summary>
         ///   Looks up a localized string similar to Items flagged for refactoring should be refactored..
         /// </summary>
@@ -95,7 +95,7 @@ namespace DarkPatterns.Refactoring {
                 return ResourceManager.GetString("MustRefactorDescription", resourceCulture);
             }
         }
-        
+
         /// <summary>
         ///   Looks up a localized string similar to Symbol &apos;{0}&apos; is marked for refactoring during &apos;{1}&apos;; notes: {2}.
         /// </summary>
@@ -104,7 +104,34 @@ namespace DarkPatterns.Refactoring {
                 return ResourceManager.GetString("MustRefactorMessageFormat", resourceCulture);
             }
         }
-        
+
+        /// <summary>
+        ///   Looks up a localized string similar to Items not planned for refactoring cannot use symbols flagged for removal..
+        /// </summary>
+        internal static string MustRefactorPlannedForRemovalDescription {
+            get {
+                return ResourceManager.GetString("MustRefactorPlannedForRemovalDescription", resourceCulture);
+            }
+        }
+
+        /// <summary>
+        ///   Looks up a localized string similar to Symbol &apos;{0}&apos; is marked for removal and &apos;{1}&apos; is not marked as needing refactoring by ticket &apos;{2}&apos;: {3}.
+        /// </summary>
+        internal static string MustRefactorPlannedForRemovalMessageFormat {
+            get {
+                return ResourceManager.GetString("MustRefactorPlannedForRemovalMessageFormat", resourceCulture);
+            }
+        }
+
+        /// <summary>
+        ///   Looks up a localized string similar to Item is not planned for refactoring.
+        /// </summary>
+        internal static string MustRefactorPlannedForRemovalTitle {
+            get {
+                return ResourceManager.GetString("MustRefactorPlannedForRemovalTitle", resourceCulture);
+            }
+        }
+
         /// <summary>
         ///   Looks up a localized string similar to Item is ready for refactor.
         /// </summary>
@@ -113,7 +140,7 @@ namespace DarkPatterns.Refactoring {
                 return ResourceManager.GetString("MustRefactorTitle", resourceCulture);
             }
         }
-        
+
         /// <summary>
         ///   Looks up a localized string similar to Items ready for removal should be removed..
         /// </summary>
@@ -122,16 +149,16 @@ namespace DarkPatterns.Refactoring {
                 return ResourceManager.GetString("ReadyForRemovalDescription", resourceCulture);
             }
         }
-        
+
         /// <summary>
-        ///   Looks up a localized string similar to Symbol &apos;{0}&apos; is planned for removal during &apos;{1}&apos;; notes: {2}.
+        ///   Looks up a localized string similar to Symbol &apos;{0}&apos; is planned for removal and &apos;{1}&apos; is not marked as planned.
         /// </summary>
         internal static string ReadyForRemovalMessageFormat {
             get {
                 return ResourceManager.GetString("ReadyForRemovalMessageFormat", resourceCulture);
             }
         }
-        
+
         /// <summary>
         ///   Looks up a localized string similar to Item is ready for removal.
         /// </summary>
@@ -140,7 +167,7 @@ namespace DarkPatterns.Refactoring {
                 return ResourceManager.GetString("ReadyForRemovalTitle", resourceCulture);
             }
         }
-        
+
         /// <summary>
         ///   Looks up a localized string similar to The analyzers version does not support the version of annotations used..
         /// </summary>
@@ -149,7 +176,7 @@ namespace DarkPatterns.Refactoring {
                 return ResourceManager.GetString("VersionMismatchDescription", resourceCulture);
             }
         }
-        
+
         /// <summary>
         ///   Looks up a localized string similar to The analyzers version does not support the version of annotations used.
         /// </summary>
@@ -158,7 +185,7 @@ namespace DarkPatterns.Refactoring {
                 return ResourceManager.GetString("VersionMismatchMessageFormat", resourceCulture);
             }
         }
-        
+
         /// <summary>
         ///   Looks up a localized string similar to The analyzers version does not match the annotations.
         /// </summary>

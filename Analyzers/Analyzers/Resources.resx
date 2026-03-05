@@ -150,15 +150,27 @@
   <data name="VersionMismatchTitle" xml:space="preserve">
     <value>The analyzers version does not match the annotations</value>
   </data>
-  <data name="MustNotUsePlannedForRemovalDescription" xml:space="preserve">
+  <data name="MustRemovePlannedForRemovalDescription" xml:space="preserve">
+    <value>Items not planned for removal cannot expose symbols flagged for removal.</value>
+    <comment>An optional longer localizable description of the diagnostic.</comment>
+  </data>
+  <data name="MustRemovePlannedForRemovalMessageFormat" xml:space="preserve">
+    <value>Symbol '{0}' is marked for removal and '{1}' is not marked for removal by ticket '{2}': {3}</value>
+    <comment>The format-able message the diagnostic displays.</comment>
+  </data>
+  <data name="MustRemovePlannedForRemovalTitle" xml:space="preserve">
+    <value>Item is not planned for removal</value>
+    <comment>The title of the diagnostic.</comment>
+  </data>
+  <data name="MustRefactorPlannedForRemovalDescription" xml:space="preserve">
     <value>Items not planned for refactoring cannot use symbols flagged for removal.</value>
     <comment>An optional longer localizable description of the diagnostic.</comment>
   </data>
-  <data name="MustNotUsePlannedForRemovalMessageFormat" xml:space="preserve">
-    <value>Symbol '{0}' is marked for removal and '{1}' is not marked as needing refactoring by ticket '{2}'</value>
+  <data name="MustRefactorPlannedForRemovalMessageFormat" xml:space="preserve">
+    <value>Symbol '{0}' is marked for removal and '{1}' is not marked as needing refactoring by ticket '{2}': {3}</value>
     <comment>The format-able message the diagnostic displays.</comment>
   </data>
-  <data name="MustNotUsePlannedForRemovalTitle" xml:space="preserve">
+  <data name="MustRefactorPlannedForRemovalTitle" xml:space="preserve">
     <value>Item is not planned for refactoring</value>
     <comment>The title of the diagnostic.</comment>
   </data>
