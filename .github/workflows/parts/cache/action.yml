@@ -9,7 +9,7 @@ runs:
     - uses: actions/setup-dotnet@v3
       with:
         # The main version this project uses
-        dotnet-version: '8.0.x'
+        dotnet-version: '10.0.x'
 
     - uses: actions/cache@v3
       with:
