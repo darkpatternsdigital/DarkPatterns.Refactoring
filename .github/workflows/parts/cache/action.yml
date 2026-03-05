@@ -1,0 +1,19 @@
+name: 'Package Cache'
+description: 'Caches packages for this repository'
+inputs: {}
+outputs: {}
+runs:
+  using: 'composite'
+  steps:
+    # .NET install and cache
+    - uses: actions/setup-dotnet@v3
+      with:
+        # The main version this project uses
+        dotnet-version: '8.0.x'
+
+    - uses: actions/cache@v3
+      with:
+        path: ~/.nuget/packages
+        key: ${{ runner.os }}-nuget-${{ hashFiles('**/*.csproj') }}
+        restore-keys: |
+          ${{ runner.os }}-nuget-

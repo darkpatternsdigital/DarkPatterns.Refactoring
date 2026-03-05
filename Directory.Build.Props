@@ -17,7 +17,7 @@
 		<Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
 
 		<SignAssembly>True</SignAssembly>
-		<AssemblyOriginatorKeyFile Condition="exists('$(SolutionRoot)OpenApiCodegen.snk')">$(SolutionRoot)OpenApiCodegen.snk</AssemblyOriginatorKeyFile>
+		<AssemblyOriginatorKeyFile Condition="exists('$(SolutionRoot)Refactoring.snk')">$(SolutionRoot)Refactoring.snk</AssemblyOriginatorKeyFile>
 		<NoWarn Condition="$(MSBuildProjectName.Contains('Test'))">$(NoWarn);CS8002;CA1054</NoWarn>
 	</PropertyGroup>
 
