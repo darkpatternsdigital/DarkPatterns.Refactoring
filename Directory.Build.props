@@ -17,7 +17,7 @@
 		<Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
 
 		<SignAssembly>True</SignAssembly>
-		<AssemblyOriginatorKeyFile Condition="exists('$(SolutionRoot)OpenApiCodegen.snk')">$(SolutionRoot)OpenApiCodegen.snk</AssemblyOriginatorKeyFile>
+		<AssemblyOriginatorKeyFile Condition="exists('$(SolutionRoot)Refactoring.snk')">$(SolutionRoot)Refactoring.snk</AssemblyOriginatorKeyFile>
 		<NoWarn Condition="$(MSBuildProjectName.Contains('Test'))">$(NoWarn);CS8002;CA1054</NoWarn>
 	</PropertyGroup>
 
@@ -33,14 +33,14 @@
 	<Import Project="Directory.Build.local.props" Condition="exists('$(MSBuildThisFileDirectory)Directory.Build.local.props')" />
 
 	<PropertyGroup>
-		<Authors>Dark Patterns Digital, Principle Studios, Matt DeKrey, Tony Mishler, Chris Lees</Authors>
-		<PackageProjectUrl>https://github.com/darkpatternsdigital/openapi-generators</PackageProjectUrl>
-		<RepositoryUrl>https://github.com/darkpatternsdigital/openapi-generators.git</RepositoryUrl>
+		<Authors>Dark Patterns Digital, Matt DeKrey</Authors>
+		<PackageProjectUrl>https://github.com/darkpatternsdigital/DarkPatterns.Refactoring</PackageProjectUrl>
+		<RepositoryUrl>https://github.com/darkpatternsdigital/DarkPatterns.Refactoring.git</RepositoryUrl>
 		<RepositoryType>git</RepositoryType>
 		<RepositoryBranch>main</RepositoryBranch>
 		<PublishRepositoryUrl>true</PublishRepositoryUrl>
 		<PackageIcon>dpd-logo.png</PackageIcon>
-		<Copyright>2026 Matt DeKrey; Dark Patterns Digital, LCA; &amp; Principle Studios</Copyright>
+		<Copyright>2026 Matt DeKrey; Dark Patterns Digital, LCA</Copyright>
 		<PackageLicenseExpression>BSD-2-Clause</PackageLicenseExpression>
 		<PackageReadmeFile>README.md</PackageReadmeFile>
 	</PropertyGroup>
