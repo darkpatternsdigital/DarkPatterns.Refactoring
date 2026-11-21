@@ -33,7 +33,6 @@ public static class FluentTestExtensions
             test.TestState.AdditionalFiles.Add((filename, manifestContents));
             test.TestState.AnalyzerConfigFiles.Add((filename + Guid.NewGuid(), $"""
             [{filename}]
-            build_metadata.AdditionalFiles.Identity = {filename}
             build_metadata.AdditionalFiles.DPDRefactoringManifest = true
             """));
             //test.TestState.
