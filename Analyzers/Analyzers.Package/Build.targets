@@ -1,6 +1,13 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <Project>
 	<ItemGroup>
-		<DPDRefactoringManifest Condition="'$(DPDRefactoringManifest)' == '' and exists('PlannedRefactoring.txt')" Include="PlannedRefactoring.txt"/>
+		<DPDRefactoringManifest Include="PlannedRefactoring.txt"
+			Condition="'@(DPDRefactoringManifest)' == '' and '$(DPDDisableDefaultRefactoringManifest)' != 'true' and exists('PlannedRefactoring.txt')" />
+
+		<!-- Only touch the manifest files: tag them if already listed as AdditionalFiles, otherwise add them. -->
+		<AdditionalFiles Update="@(DPDRefactoringManifest)" DPDRefactoringManifest="true" />
+		<AdditionalFiles Include="@(DPDRefactoringManifest)" Exclude="@(AdditionalFiles)" DPDRefactoringManifest="true" />
+
+		<Watch Include="@(DPDRefactoringManifest)" />
 	</ItemGroup>
 </Project>
